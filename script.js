@@ -115,7 +115,7 @@
               directionsDisplay.setDirections(response);
 		       // Box around the overview path of the first route
 		       path = response.routes[0].overview_path;
-		 //      alert(path.length);
+		       alert(path.length);
 	//	       bounds = routeBoxer.box(path, distance);
 
 	//	       searchBounds(bounds);              
@@ -128,12 +128,12 @@
 
 
           function antshant(path,keyword){
-          	for(var i=0; i<path.length; i++)
+          	for(var i=0; i<path.length; i=i+5)
           	{
           		infowindow = new google.maps.InfoWindow();
 		        service.nearbySearch({
 		          location: path[i],
-		          radius: 500,
+		          radius: 200,
 		          type: [keyword]
 		        }, callback);
 
