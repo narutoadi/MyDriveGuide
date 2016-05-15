@@ -3,14 +3,12 @@
         height: 100%;
         margin: 0;
         padding: 0;
-        overflow-y: hidden;
-		overflow-x: hidden;
       }
       #map {
         height: 100%;
       }
       .controls {
-        margin-top: 30px; 
+        margin-top: 50px; 
         border: 1px solid transparent;
         border-radius: 20px 0px 0px 20px;
         box-sizing: border-box;
@@ -20,7 +18,7 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
       }
       .controls2 {
-      	margin-top: 30px; 
+      	margin-top: 50px; 
         border: 1px solid transparent;
         border-radius: 0px 20px 20px 0px;
         box-sizing: border-box;
@@ -34,7 +32,7 @@
         font-family: Roboto;
         font-size: 15px;
         font-weight: 300;
-        margin-left: 50px;
+        margin-left: 100px;
         padding: 0 11px 0 13px;
         text-overflow: ellipsis;
         width: 350px;
@@ -58,29 +56,18 @@
       .pac-container {
         font-family: Roboto;
       }
-      #radio-button-form {
-      	height: 90px;
-      	background-color: #fff;
+
+      #type-selector {
+        color: #fff;
+        background-color: #4d90fe;
+        padding: 5px 11px 0px 11px;
+      }
+
+      #type-selector label {
         font-family: Roboto;
-        font-size: 15px;
+        font-size: 13px;
         font-weight: 300;
-        margin-left: 32%;
-        padding: 0px 11px 0px 13px;
-        
       }
-      .rb {
-      	margin-top: 30px; 
-        border: 1px solid transparent;
-        border-radius: 20px 20px 20px 20px;
-        outline: none;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-      }
-      #rb1 {
-      	height: 20%;
-      }
-      #rb2 {
-      	height: 20%;
-      }
-      #rb3 {
-      	height: 20%;
+      #target {
+        width: 345px;
       }
