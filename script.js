@@ -2,12 +2,15 @@
         var origin_place_id = null;
         var destination_place_id = null;
         var path = null;
+        var markcolor = 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png';
+        var marker1;
+        var marker1LatLng;
+        var marker1Array = [];
         var map = new google.maps.Map(document.getElementById('map'), {
           mapTypeControl: false,
           center: {lat: 28.6139, lng: 77.2090},
           zoom: 9,
           scrollwheel:false,
-           
            mapTypeId:google.maps.MapTypeId.ROADMAP
         });
         addEvent(window, 'load', addListeners, false);
@@ -24,16 +27,29 @@
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(origin_input);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(destination_input);
         map.controls[google.maps.ControlPosition.TOP_LEFT].push(form);
-        var infowindow;
+        var infowindow = new google.maps.InfoWindow();
         var service = new google.maps.places.PlacesService(map);
         var origin_autocomplete = new google.maps.places.Autocomplete(origin_input);
         origin_autocomplete.bindTo('bounds', map);
         var destination_autocomplete = new google.maps.places.Autocomplete(destination_input);
         destination_autocomplete.bindTo('bounds', map);
-        
+
        function optcheck(e) {
        	var thing1 = e.target;
-       	antshant(path,thing1.value);
+       	if(thing1.value == 'atm')
+          	{ 
+          		markcolor = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+      		}
+          	else if(thing1.value == 'gas_station')
+          	{
+          		markcolor = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+          	}
+          	else
+          	{
+          		markcolor = 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png';	
+          	}
+
+       		antshant(path,thing1.value);
 		    
 		}
 
@@ -44,8 +60,6 @@
 		 }
 
 		 function addEvent(elm, evType, fn, useCapture)
-		// cross-browser event handling for IE5+, NS6+ and Mozilla/Gecko
-		// By Scott Andrew
 		{
 		  if (elm.addEventListener) {
 		    elm.addEventListener(evType, fn, useCapture);
@@ -104,6 +118,9 @@
           if (!origin_place_id || !destination_place_id) {
             return;
           }
+      		document.getElementById("rb1").disabled = false;
+	       	document.getElementById("rb2").disabled = false;
+	       	document.getElementById("rb3").disabled = false;
           directionsService.route({
             origin: {'placeId': origin_place_id},
             destination: {'placeId': destination_place_id},
@@ -115,10 +132,30 @@
               directionsDisplay.setDirections(response);
 		       // Box around the overview path of the first route
 		       path = response.routes[0].overview_path;
-		       alert(path.length);
-	//	       bounds = routeBoxer.box(path, distance);
-
-	//	       searchBounds(bounds);              
+		       
+		       if(path.length > 70)
+		       {
+		       	alert("Path is too long_!! Use the orange-draggable marker_!!");
+		       	document.getElementById("rb1").disabled = true;
+		       	document.getElementById("rb2").disabled = true;
+		       	document.getElementById("rb3").disabled = true;
+		       		marker1 = new google.maps.Marker({
+					  draggable: true,
+					  position: path[10], 
+					  map: map,
+					  icon: markcolor,
+					  title: "Your location"
+					  });
+		       		google.maps.event.addListener(marker1, 'dragend', function (event) {
+		       			marker1LatLng = this.getPosition();
+		       			infowindow = new google.maps.InfoWindow();
+			        	service.nearbySearch({
+				        location: marker1LatLng,
+				        radius: 300,
+				        type: ['atm']
+				        }, callback1);
+					});
+		       }          
             } else {
               window.alert('Directions request failed due to ' + status);
             }
@@ -128,18 +165,20 @@
 
 
           function antshant(path,keyword){
-          	for(var i=0; i<path.length; i=i+5)
-          	{
-          		infowindow = new google.maps.InfoWindow();
-		        service.nearbySearch({
-		          location: path[i],
-		          radius: 200,
-		          type: [keyword]
-		        }, callback);
+          	
+	          	for(var i=0; i<path.length; i+=5)
+	          	{
+	          		infowindow = new google.maps.InfoWindow();
+			        service.nearbySearch({
+			          location: path[i],
+			          radius: 150,
+			          type: [keyword]
+			        }, callback);
 
-          	}
-          	//alert(path.length);
+	          	}
+	        
           }
+
 	      function callback(results, status) {
 	        if (status == google.maps.places.PlacesServiceStatus.OK) {
 	          for (var i = 0; i < results.length; i++) {
@@ -148,17 +187,89 @@
 	        }
 	      }
 
+	      function callback1(results, status) {
+	        if (status == google.maps.places.PlacesServiceStatus.OK) {
+	          for (var i = 0; i < results.length; i++) {
+	            createMarker1(results[i]);
+	          }
+	            service.nearbySearch({
+				        location: marker1LatLng,
+				        radius: 300,
+				        type: ['gas_station']
+				        }, callback2);
+	        }
+	      }
+
+	      function callback2(results, status) {
+	        if (status == google.maps.places.PlacesServiceStatus.OK) {
+	          for (var i = 0; i < results.length; i++) {
+	            createMarker2(results[i]);
+	          }
+	            service.nearbySearch({
+				        location: marker1LatLng,
+				        radius: 300,
+				        type: ['restaurant']
+				        }, callback3);
+	        }
+	      }
+
+	      function callback3(results, status) {
+	        if (status == google.maps.places.PlacesServiceStatus.OK) {
+	          for (var i = 0; i < results.length; i++) {
+	            createMarker3(results[i]);
+	          }
+	        }
+	      }
+
 	      function createMarker(place) {
 	        var placeLoc = place.geometry.location;
 	        var marker = new google.maps.Marker({
 	          map: map,
-	          position: place.geometry.location
+	          position: place.geometry.location,
+	          icon : markcolor
 	        });
+	       	google.maps.event.addListener(marker, 'click', function() {
+	          infowindow.setContent(place.name);
+	          infowindow.open(map, this);
+	        });
+	      }
 
+	       	function createMarker1(place) {
+	        var placeLoc = place.geometry.location;
+	        var marker = new google.maps.Marker({
+	          map: map,
+	          position: place.geometry.location,
+	          icon : 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
+	        });
 	        google.maps.event.addListener(marker, 'click', function() {
 	          infowindow.setContent(place.name);
 	          infowindow.open(map, this);
 	        });
 	      }
 
-}   
+	       	function createMarker2(place) {
+	        var placeLoc = place.geometry.location;
+	        var marker = new google.maps.Marker({
+	          map: map,
+	          position: place.geometry.location,
+	          icon : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
+	        });
+	        google.maps.event.addListener(marker, 'click', function() {
+	          infowindow.setContent(place.name);
+	          infowindow.open(map, this);
+	        });
+	      }
+
+	        function createMarker3(place) {
+	        var placeLoc = place.geometry.location;
+	        var marker = new google.maps.Marker({
+	          map: map,
+	          position: place.geometry.location,
+	          icon : 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
+	        });
+	        google.maps.event.addListener(marker, 'click', function() {
+	          infowindow.setContent(place.name);
+	          infowindow.open(map, this);
+	        });
+	      }
+ }     
