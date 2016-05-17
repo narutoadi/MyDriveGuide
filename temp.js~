@@ -1,7 +1,7 @@
 function initMap() {
         var origin_place_id = null;
         var destination_place_id = null;
-        var unique = [];
+        
         var path = null;
         var markcolor = 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png';
         var marker1 = null; // This is the draggable marker
@@ -39,7 +39,7 @@ function initMap() {
         var destination_autocomplete = new google.maps.places.Autocomplete(destination_input);
         destination_autocomplete.bindTo('bounds', map);
 
-        window.alert("A Short Tour TO The App : Fill the Origin and Destination in top-left boxes, \nYou will Find the most-suitable route displayed on the map. \n Drag the Orange Marker to see landmarks around. \n Happy Browsing :)")
+
         function expandViewportToFitPlace(map, place) {
           if (place.geometry.viewport) {
             map.fitBounds(place.geometry.viewport);
@@ -94,24 +94,16 @@ function initMap() {
  			 unitSystem: google.maps.UnitSystem.METRIC
           }, function(response, status) {
             if (status === google.maps.DirectionsStatus.OK) {
-            	var totalDistance = 0;
-            	var totalDuration = 0;
+
               directionsDisplay.setDirections(response);
 		       path = response.routes[0].overview_path;
-		       var legs = response.routes[0].legs;
-				for(var i=0; i<legs.length; ++i) {
-				    totalDistance += legs[i].distance.value;
-				    totalDuration += legs[i].duration.value;
-				}
-			//	alert(totalDistance);
-				document.getElementById("rb4").value = "Distance= "+totalDistance/1000 + " KM";
 		       // Lets create a draggable marker 
 		       marker1 = new google.maps.Marker({
 					  draggable: true,
 					  position: path[0], 
 					  map: map,
 					  icon: 'http://maps.google.com/mapfiles/ms/icons/orange-dot.png',
-					  title: "Change Your location"
+					  title: "Your location"
 					  });
 		       markerArray.push(marker1);
 
@@ -154,16 +146,8 @@ function initMap() {
          // 	window.alert(status);
           	if (status == google.maps.places.PlacesServiceStatus.OK) {
      //     		window.alert(results.length);
-     			unique = [];
 	          for (var i = 0; i < results.length; i++) {
-	      		var place = results[i];
-	      		if(!placeExist(place))
-	      		{
-	      			unique.push(place);
-	      		}       
-	      	}
-	      	for(var i = 0 ; i<unique.length;i++)
-			{
+	      		var place = results[i];       
 	            var mark2 = new google.maps.Marker({
 					  position: place.geometry.location, 
 					  map: map,
@@ -184,18 +168,10 @@ function initMap() {
           function callback2(results, status){
           	if (status == google.maps.places.PlacesServiceStatus.OK) {
         //  		window.alert(results.length);
-     			unique = [];
 	          for (var i = 0; i < results.length; i++) {
-	      		var place = results[i];
-	      		if(!placeExist(place))
-	      		{
-	      			unique.push(place);
-	      		}       
-	      	}
-	          for (var i = 0; i < unique.length; i++) {
-	      		var place = unique[i];	            
+	      		var place = results[i];	            
 	            var mark2 = new google.maps.Marker({
-					  position: place.geometry.location, 
+					  position: results[i].geometry.location, 
 					  map: map,
 					  icon: 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png'
 					  });
@@ -214,18 +190,10 @@ function initMap() {
           function callback3(results, status){
           	if (status == google.maps.places.PlacesServiceStatus.OK) {
     //      		window.alert(results.length);
-     			unique = [];
 	          for (var i = 0; i < results.length; i++) {
-	      		var place = results[i];
-	      		if(!placeExist(place))
-	      		{
-	      			unique.push(place);
-	      		}       
-	      	}	         
-	          for (var i = 0; i < unique.length; i++) {
-	            var place = unique[i];
+	            var place = results[i];
 	            var mark2 = new google.maps.Marker({
-					  position: place.geometry.location, 
+					  position: results[i].geometry.location, 
 					  map: map,
 					  icon: 'http://maps.google.com/mapfiles/ms/icons/pink-dot.png'
 					  });
@@ -248,13 +216,4 @@ function initMap() {
           	markerArray = [];
           }
           
-          function placeExist(x){
-          	for(var i =0;i<unique.length;i++)
-          	{
-          		if(unique[i].place_id == x.place_id){
-          			return true;
-          		}
-          	}
-          	return false;
-          }
      }

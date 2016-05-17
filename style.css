@@ -29,6 +29,13 @@
         outline: none;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
       }
+      #rb4{
+        margin-top: 0px;
+        height: 25px;
+        border :0px;
+        border-radius: 20px 20px 20px 20px;
+        padding: 0 4px 0 4px;
+      }
       #pac-input {
         background-color: #fff;
         font-family: Roboto;
@@ -59,14 +66,20 @@
         font-family: Roboto;
       }
       #radio-button-form {
-        height: 90px;
+        height: 100px;
         background-color: #fff;
         font-family: Roboto;
         font-size: 15px;
         font-weight: 300;
-        margin-left: 32%;
-        padding: 0px 10px 0px 13px;
+        margin-left: 30%;
+        padding: 0 4px 0 4px;
         
+      }
+      p {
+        margin-top: 0px;
+        height: 20px;
+        padding: 0 4px 0 4px;
+        margin-bottom: 5px;
       }
       .rb {
         margin-top: 30px; 
@@ -76,14 +89,17 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
       }
       #rb1 {
+        border-radius: 20px 20px 20px 20px;
         margin-top: 0px;
         background-color: #FFFF00;
       }
       #rb2 {
+        border-radius: 20px 20px 20px 20px;
         background-color: #0000FF;
         
       }
       #rb3 {
+        border-radius: 20px 20px 20px 20px;
         background-color: #FF00FF;
         
       }
