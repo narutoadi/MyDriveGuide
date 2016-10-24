@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Places Searchbox</title>
+    <link rel = "stylesheet" href="style.css">
+    <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+  </head>
+  <body>
+    <input id="pac-input" class="controls" type="text" placeholder="From">
+    <input id="pac-input2" class="controls2" type="text" placeholder="To" >
+    
+    <div id ="radio-button-form2" class="rb">
+    <button id="pac-input3" class="btn btn-success btnx ">Login</button>
+    <button id="pac-input4" class="btn btn-success btnx ">Sign Up</button>
+    </div>
+    <div id ="radio-button-form" class="rb">
+      <button id="rb1" class="btn btn-success btnx"> ATM </button>
+      <button id="rb2" class="btn btn-success btnx"> Petrol-Pump </button>
+      <button id="rb3" class="btn btn-success btnx"> Restaurant </button>
+      <input  type="text" name="distance" value="Distance" id="rb4"/>
+    </div>
+    <div id="map"></div>
+    <script src="temp.js"></script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?v=3.24&key=AIzaSyCgTNoLlcfvpslBlCxlPDmepd4x9yquzvA&libraries=places,visualization&callback=initMap"></script>
+
+    <!--<script src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization&callback=initMap"
+        async defer></script>-->
+  </body>
+</html>

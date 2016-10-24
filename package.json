@@ -1,0 +1,33 @@
+{
+  "name": "mydriveguide",
+  "version": "1.0.0",
+  "description": "Lets plan our long road drive beforehand.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/narutoadi/MyDriveGuide.git"
+  },
+  "keywords": [
+    "googleMaps",
+    "planning",
+    "driving",
+    "road",
+    "trip"
+  ],
+  "author": "Aditi Mishra",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/narutoadi/MyDriveGuide/issues"
+  },
+  "homepage": "https://github.com/narutoadi/MyDriveGuide#readme",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongodb": "^2.2.11"
+  },
+  "devDependencies": {}
+}
